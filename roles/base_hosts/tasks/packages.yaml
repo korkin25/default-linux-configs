@@ -1,0 +1,22 @@
+---
+- name: Upgrade all packages
+  ansible.builtin.apt:
+    upgrade: dist
+    update_cache: yes
+    cache_valid_time: 3600
+  become: yes
+  tags: packages
+
+# Concatenate common_packages and host_packages into all_packages, considering cases when they might be null
+- name: Concatenate variables
+  ansible.builtin.set_fact:
+    all_packages: "{{ [common_packages, host_packages] | select('defined') | list | join(',') }}"
+  tags: packages
+
+- name: Upgrade all packages
+  ansible.builtin.apt:
+    upgrade: dist
+    update_cache: yes
+    cache_valid_time: 3600
+  become: yes
+  tags: packages

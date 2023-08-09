@@ -1,0 +1,7 @@
+kk573-hp 
+
+[default_skel]
+kk573-hp host_packages="mc,wajig"
+
+[default_skel:vars]
+common_packages="ufw"

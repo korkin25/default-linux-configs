@@ -1,0 +1,10 @@
+#vim: set ft=yaml.ansible
+## Common vars
+
+#vim: set ft=yaml.ansible
+## Common vars
+
+common_packages: 
+  - wajig
+  - aptitude
+  - vim-nox

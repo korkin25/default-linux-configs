@@ -1,0 +1,19 @@
+#vim: set ft=yaml.ansible
+---
+- name: Set hostname
+  ansible.builtin.hostname:
+    name: "{{ inventory_hostname }}"
+  become: true
+
+- name: Check ansible version > 2.14 (required for ansible.posix.synchronize)
+  ansible.builtin.assert:
+    that:
+      - "ansible_version.full is version('2.14', '>=')"
+    fail_msg: "This playbook requires Ansible 2.14 or higher"
+  run_once: true
+
+- name: Populate skel files
+  ansible.builtin.import_tasks: skel_setup.yaml
+
+- name: Install packages
+  ansible.builtin.import_tasks: packages.yaml

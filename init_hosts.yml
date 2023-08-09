@@ -1,0 +1,10 @@
+# vim: filetype=yaml.ansible:
+---
+
+- name: Install default skel files set
+  hosts: default_skel
+
+  # Gather facts about the system
+  gather_facts: true
+  roles:
+    - { role: base_hosts }
