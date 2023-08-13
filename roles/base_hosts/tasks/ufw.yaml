@@ -1,0 +1,24 @@
+---
+- name: Ensure UFW is installed
+  ansible.builtin.apt:
+    name: ufw
+    state: present
+  become: yes
+
+- name: Reset UFW rules
+  community.general.ufw:
+    state: reset
+  become: yes
+
+- name: Allow incoming connections on specific ports
+  community.general.ufw:
+    rule: allow
+    port: "{{ item.split('/')[0] }}" # Adjusted this line
+    proto: "{{ item.split('/')[1] }}"
+  loop: "{{ open_ports }}"
+  become: yes
+
+- name: Enable UFW
+  community.general.ufw:
+    state: enabled
+  become: yes
