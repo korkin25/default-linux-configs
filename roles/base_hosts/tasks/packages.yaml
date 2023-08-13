@@ -1,4 +1,6 @@
+#vim: set ft=yaml.ansible
 ---
+
 - name: Upgrade all packages
   ansible.builtin.apt:
     upgrade: dist
@@ -7,16 +9,14 @@
   become: yes
   tags: packages
 
-# Concatenate common_packages and host_packages into all_packages, considering cases when they might be null
 - name: Concatenate variables
   ansible.builtin.set_fact:
-    all_packages: "{{ [common_packages, host_packages] | select('defined') | list | join(',') }}"
+    all_packages: "{{ (common_packages + host_packages) | unique | sort }}"
   tags: packages
 
-- name: Upgrade all packages
+- name: "Install packages: {{ all_packages | join(', ') }}"
   ansible.builtin.apt:
-    upgrade: dist
-    update_cache: yes
-    cache_valid_time: 3600
+    name: "{{ all_packages }}"
+    state: present
   become: yes
   tags: packages
