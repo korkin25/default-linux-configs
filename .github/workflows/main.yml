@@ -13,8 +13,10 @@ jobs:
     - name: Install ansible-lint
       run: |
         pip install ansible-lint
+    - name: Install galaxy collections
+      run: |
+        ansible-galaxy collection install ansible.posix
     - name: Run ansible-lint
       run: |
-        ls -l
         ansible-lint init_hosts.yml
         
