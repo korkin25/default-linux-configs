@@ -6,7 +6,7 @@
     upgrade: dist
     update_cache: yes
     cache_valid_time: "{{ cache_valid_time }}"
-  become: yes
+  become: true
   tags: packages
 
 - name: Concatenate variables
@@ -18,5 +18,5 @@
   ansible.builtin.apt:
     name: "{{ all_packages }}"
     state: present
-  become: yes
+  become: true
   tags: packages

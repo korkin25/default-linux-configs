@@ -21,6 +21,6 @@
     src: skel/
     dest: /etc/skel/
     recursive: yes
-    delete: no
+    delete: false
   when: custom_skel_file.stat.exists
   become: true

@@ -3,7 +3,7 @@
     name: fail2ban
     state: restarted
   register: result
-  ignore_errors: yes
+  ignore_errors: true
   tags: fail2ban
 
 - name: Display fail2ban logs from journalctl if service doesn't start

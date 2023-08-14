@@ -1,4 +1,4 @@
-#vim: set ft=yaml.ansible
+# vim: set ft=yaml.ansible
 ---
 
 cache_valid_time: 3600
