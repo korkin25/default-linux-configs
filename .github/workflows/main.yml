@@ -1,0 +1,19 @@
+name: Ansible Lint
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+    - name: Install ansible-lint
+      run: |
+        pip install ansible-lint
+    - name: Run ansible-lint
+      run: |
+        ansible-lint init_hosts.yaml
+        
