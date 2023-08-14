@@ -15,5 +15,6 @@ jobs:
         pip install ansible-lint
     - name: Run ansible-lint
       run: |
+        ls -l
         ansible-lint init_hosts.yaml
         
