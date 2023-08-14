@@ -4,7 +4,7 @@
 - name: Upgrade all packages
   ansible.builtin.apt:
     upgrade: dist
-    update_cache: yes
+    update_cache: true
     cache_valid_time: "{{ cache_valid_time }}"
   become: true
   tags: packages

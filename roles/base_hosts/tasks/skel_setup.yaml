@@ -20,7 +20,7 @@
   ansible.posix.synchronize:
     src: skel/
     dest: /etc/skel/
-    recursive: yes
+    recursive: true
     delete: false
   when: custom_skel_file.stat.exists
   become: true
