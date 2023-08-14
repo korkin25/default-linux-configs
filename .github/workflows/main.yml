@@ -16,5 +16,5 @@ jobs:
     - name: Run ansible-lint
       run: |
         ls -l
-        ansible-lint init_hosts.yaml
+        ansible-lint init_hosts.yml
         
