@@ -3,7 +3,7 @@
 - name: Ensure UFW is installed
   ansible.builtin.apt:
     name: ufw
-    state: latest
+    state: present
   become: true
   tags: ufw
 
@@ -53,6 +53,7 @@
   become: true
   when: rules_to_remove | length > 0
   tags: ufw
+  changed_when: false
 
 - name: Enable UFW
   community.general.ufw:

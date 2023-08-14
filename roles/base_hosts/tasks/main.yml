@@ -21,3 +21,6 @@
 
 - name: Firewlall setup
   ansible.builtin.import_tasks: ufw.yaml
+
+- name: Fail2ban setup
+  ansible.builtin.import_tasks: fail2ban.yaml

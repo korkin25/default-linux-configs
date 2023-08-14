@@ -1,0 +1,21 @@
+- name: Restart fail2ban
+  ansible.builtin.service:
+    name: fail2ban
+    state: restarted
+  register: result
+  ignore_errors: yes
+  tags: fail2ban
+
+- name: Display fail2ban logs from journalctl if service doesn't start
+  ansible.builtin.command: journalctl -u fail2ban.service -n 50 --no-pager
+  register: logs
+  tags: fail2ban
+  become: yes
+  changed_when: result is failed
+
+- name: Display fail2ban logs from stdout_lines if service doesn't start
+  ansible.builtin.debug:
+    var: logs.stdout_lines
+  when: result is failed
+  changed_when: false # noqa no-changed-when
+  tags: fail2ban
