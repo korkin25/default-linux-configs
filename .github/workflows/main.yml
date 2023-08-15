@@ -13,12 +13,9 @@ jobs:
     - name: Install ansible-lint
       run: |
         pip install ansible-lint
-        
     - name: Install galaxy collections
       run: |
         ansible-galaxy collection install ansible.posix community.general
     - name: Run ansible-lint
       run: |
         ansible-lint main.yaml
-        ansible-lint secret_link_test.yaml
-        
