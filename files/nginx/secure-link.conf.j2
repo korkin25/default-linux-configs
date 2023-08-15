@@ -9,11 +9,12 @@ server {
     location / {
         root /var/www;
     }
-    listen [::]:80;
+    listen [::]:{{ nginx_server_port | default(80) }};
+    listen {{ nginx_listen_ssl_port | default(443)}} ssl; # managed by Certbot
 
-    listen 443 ssl; # managed by Certbot
     ssl_certificate /etc/letsencrypt/live/{{ nginx_server_name }}/fullchain.pem; # managed by Certbot
     ssl_certificate_key /etc/letsencrypt/live/{{ nginx_server_name }}/privkey.pem; # managed by Certbot
+
     include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 
