@@ -1,0 +1,56 @@
+---
+
+- name: Ensure /var/www/videos directory exists
+  file:
+    path: /var/www/videos
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: '0755'
+  become: true
+
+- name: Copy sample.mp4 to /var/www/videos only if it has changed or does not exist
+  copy:
+    src: files/video/sample.mp4
+    dest: /var/www/videos/sample.mp4
+    owner: www-data
+    group: www-data
+    mode: '0644'
+    force: no
+  become: true
+
+- name: Get current time + 1 week in seconds
+  ansible.builtin.shell:
+    cmd: "echo $(( $(date +%s) + 604800 ))"
+  delegate_to: localhost
+  register: future_time
+
+- name: Generate secure link
+  ansible.builtin.shell:
+    cmd: "echo -n '{{ future_time.stdout }}{{ test_uri }} {{ nginx_url_secret }}' | openssl md5 -binary | openssl base64 | tr +/ -_ | tr -d ="
+  delegate_to: localhost
+  register: link_result
+
+- name: Set the test_url variable
+  set_fact:
+    test_url: "https://test.gekorweb.info{{ test_uri }}?md5={{ link_result.stdout }}&expires={{ future_time.stdout }}"
+
+- name: Set curl command to get only headers
+  set_fact:
+    curl_command: "curl -I -H '{{ test_headers }}' '{{ test_url }}'"
+
+- name: Test the {{ test_url }} with curl using the command
+  ansible.builtin.command:
+    cmd: "{{ curl_command }}"
+  register: curl_output
+  changed_when: false
+
+- name: Display curl output
+  ansible.builtin.debug:
+    var: curl_command
+
+- name: Display curl output headers only
+  ansible.builtin.debug:
+    var: curl_output.stdout
+
+
