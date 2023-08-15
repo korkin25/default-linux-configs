@@ -19,5 +19,7 @@ jobs:
         ansible-galaxy collection install ansible.posix community.general
     - name: Run ansible-lint
       run: |
-        ansible-lint init_hosts.yml
+        ansible-lint --version
+        ansible-lint main.yml
+        ansible-lint secret_link_test.yml
         
