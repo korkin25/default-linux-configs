@@ -29,12 +29,11 @@
 - name: Generate secure link
   ansible.builtin.shell:
     cmd: |
-      set -o pipefail && echo -n '{{ future_time.stdout }}{{ test_uri }} {{ nginx_url_secret }}' | openssl md5 -binary | openssl base64 | tr +/ -_ | tr -d ="
+      set -o pipefail && echo -n '{{ future_time.stdout }}{{ test_uri }} {{ nginx_url_secret }}' | openssl md5 -binary | openssl base64 | tr +/ -_ | tr -d =
     executable: /bin/bash
   delegate_to: localhost
   register: link_result
   changed_when: false
-
 
 - name: Set the test_url variable
   ansible.builtin.set_fact:
