@@ -1,21 +1,17 @@
 name: Ansible Lint
-on: [push, pull_request]
+
+on:
+  push:
+  pull_request:
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Setup Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
-    - name: Install ansible-lint
-      run: |
-        pip install ansible-lint
-    - name: Install galaxy collections
-      run: |
-        ansible-galaxy collection install ansible.posix community.general
-    - name: Run ansible-lint
-      run: |
-        ansible-lint main.yaml
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use Ansible Lint Action
+        uses: korkin25/actions/ansible-lint@main
+        with:
+          playbook: main.yaml
