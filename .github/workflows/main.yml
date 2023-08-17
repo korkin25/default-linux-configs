@@ -11,7 +11,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Use Ansible Lint Action
-        uses: korkin25/actions/ansible-lint@main
-        with:
-          playbook: main.yaml
+      - name: Check Syntax
+        uses: korkin25/action-syntax-check@main
+
+      - name: Run ansible-lint
+        uses: ansible/ansible-lint@main
