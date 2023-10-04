@@ -22,5 +22,7 @@
     dest: /etc/skel/
     recursive: true
     delete: false
+    rsync_opts:
+      - "--rsh=ssh -p {{ ansible_port | default(22) }}"
   when: custom_skel_file.stat.exists
   become: true
