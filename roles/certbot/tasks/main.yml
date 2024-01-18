@@ -9,10 +9,11 @@
   tags: certbot
   become: true
 
-- name: Generate certificate using certbot for Nginx
+- name: Generate certificates using certbot for Nginx
   ansible.builtin.command:
-    cmd: certbot --nginx -d {{ nginx_server_name }} --non-interactive --agree-tos --email {{ certbot_email }}
-    creates: /etc/letsencrypt/live/{{ nginx_server_name }}/fullchain.pem
+    cmd: certbot --nginx -d {{ item }} --non-interactive --agree-tos --email {{ certbot_email }}
+    creates: /etc/letsencrypt/live/{{ item }}/fullchain.pem
+  loop: "{{ nginx_server_name }}"
   notify: Reload nginx
   tags: certbot
   become: true
