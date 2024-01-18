@@ -9,11 +9,11 @@
   roles:
     - bootstrap
 
-- name: Install services
-  hosts: webhosts
-
+#- name: Install services
+#  hosts: webhosts
+#
   # Gather facts about the system
-  gather_facts: true
-  roles:
-    - certbot
-    - install_services
+#  gather_facts: true
+#  roles:
+#    - certbot
+#    - install_services
